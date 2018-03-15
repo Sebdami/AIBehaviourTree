@@ -1,0 +1,14 @@
+{ 	"spritesheet":"Balista/Balista.png",
+	"multiframes":[			
+			{
+			 "id":0,
+			 "x":66,
+			 "y":0,
+			 "w":-66,
+			 "h":66,
+			 "frames":4,
+			 "offsetx":0,			 
+			 "offsety":66
+			}],
+	"translationspeed":80
+} 

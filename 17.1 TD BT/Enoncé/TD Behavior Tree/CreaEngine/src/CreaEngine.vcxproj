@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\AI\ActionTable.h" />
+    <ClInclude Include="..\include\AI\Agent.h" />
+    <ClInclude Include="..\include\AI\AI.h" />
+    <ClInclude Include="..\include\AI\BehaviorTree\Behavior.h" />
+    <ClInclude Include="..\include\AI\BehaviorTree\BehaviorTree.h" />
+    <ClInclude Include="..\include\AI\Msg.h" />
+    <ClInclude Include="..\include\AI\MsgManager.h" />
+    <ClInclude Include="..\include\AI\Pathfinding\AStarSearch.h" />
+    <ClInclude Include="..\include\AI\Pathfinding\ClusterSearch.h" />
+    <ClInclude Include="..\include\AI\Pathfinding\ClusterSearchManager.h" />
+    <ClInclude Include="..\include\AI\Pathfinding\ClusterSearchNode.h" />
+    <ClInclude Include="..\include\AI\Pathfinding\MapSearch.h" />
+    <ClInclude Include="..\include\AI\Pathfinding\MapSearchManager.h" />
+    <ClInclude Include="..\include\AI\Pathfinding\MapSearchNode.h" />
+    <ClInclude Include="..\include\AI\StateMachine.h" />
+    <ClInclude Include="..\include\AI\Steering\Behaviour.h" />
+    <ClInclude Include="..\include\AI\Steering\Steering.h" />
+    <ClInclude Include="..\include\AI\Steering\Vehicle.h" />
+    <ClInclude Include="..\include\Core\Component.h" />
+    <ClInclude Include="..\include\Core\DataManager.h" />
+    <ClInclude Include="..\include\Core\DebugLog.h" />
+    <ClInclude Include="..\include\Core\EntityManager.h" />
+    <ClInclude Include="..\include\Core\GameManager.h" />
+    <ClInclude Include="..\include\Core\Math.h" />
+    <ClInclude Include="..\include\Core\PhysicsManager.h" />
+    <ClInclude Include="..\include\Core\SceneManager.h" />
+    <ClInclude Include="..\include\Core\Scene.h" />
+    <ClInclude Include="..\include\Core\Script.h" />
+    <ClInclude Include="..\include\Core\Singleton.h" />
+    <ClInclude Include="..\include\Core\TimeManager.h" />
+    <ClInclude Include="..\include\Core\Transformable.h" />
+    <ClInclude Include="..\include\CreaImport.h" />
+    <ClInclude Include="..\include\Data\Animation.h" />
+    <ClInclude Include="..\include\Data\Cluster.h" />
+    <ClInclude Include="..\include\Data\Entity.h" />
+    <ClInclude Include="..\include\Data\Map.h" />
+    <ClInclude Include="..\include\Data\Node.h" />
+    <ClInclude Include="..\include\Data\TileSet.h" />
+    <ClInclude Include="..\include\Graphics\Animator.h" />
+    <ClInclude Include="..\include\Graphics\Color.h" />
+    <ClInclude Include="..\include\Graphics\Font.h" />
+    <ClInclude Include="..\include\Graphics\MapRenderer.h" />
+    <ClInclude Include="..\include\Graphics\Shape.h" />
+    <ClInclude Include="..\include\Graphics\ShapeRenderer.h" />
+    <ClInclude Include="..\include\Graphics\Sprite.h" />
+    <ClInclude Include="..\include\Graphics\SpriteRenderer.h" />
+    <ClInclude Include="..\include\Graphics\Text.h" />
+    <ClInclude Include="..\include\Graphics\TextRenderer.h" />
+    <ClInclude Include="..\include\Graphics\Texture.h" />
+    <ClInclude Include="..\include\Input\InputManager.h" />
+    <ClInclude Include="..\include\json\json-forwards.h" />
+    <ClInclude Include="..\include\json\json.h" />
+    <ClInclude Include="..\include\Physics\Collider.h" />
+    <ClInclude Include="..\include\stdafx.h" />
+    <ClInclude Include="..\include\targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AI\ActionTable.cpp" />
+    <ClCompile Include="AI\Agent.cpp" />
+    <ClCompile Include="AI\BehaviorTree\BehaviorTree.cpp" />
+    <ClCompile Include="AI\DebugLog.cpp" />
+    <ClCompile Include="AI\Msg.cpp" />
+    <ClCompile Include="AI\MsgManager.cpp" />
+    <ClCompile Include="AI\Pathfinding\ClusterSearch.cpp" />
+    <ClCompile Include="AI\Pathfinding\ClusterSearchManager.cpp" />
+    <ClCompile Include="AI\Pathfinding\ClusterSearchNode.cpp" />
+    <ClCompile Include="AI\Pathfinding\MapSearch.cpp" />
+    <ClCompile Include="AI\Pathfinding\MapSearchManager.cpp" />
+    <ClCompile Include="AI\Pathfinding\MapSearchNode.cpp" />
+    <ClCompile Include="AI\StateMachine.cpp" />
+    <ClCompile Include="AI\Steering\Behaviour.cpp" />
+    <ClCompile Include="AI\Steering\Steering.cpp" />
+    <ClCompile Include="AI\Steering\Vehicle.cpp" />
+    <ClCompile Include="Core\Component.cpp" />
+    <ClCompile Include="Core\DataManager.cpp" />
+    <ClCompile Include="Core\EntityManager.cpp" />
+    <ClCompile Include="Core\GameManager.cpp" />
+    <ClCompile Include="Core\PhysicsManager.cpp" />
+    <ClCompile Include="Core\Scene.cpp" />
+    <ClCompile Include="Core\SceneManager.cpp" />
+    <ClCompile Include="Core\TimeManager.cpp" />
+    <ClCompile Include="CreaEngine.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Data\Animation.cpp" />
+    <ClCompile Include="Data\Cluster.cpp" />
+    <ClCompile Include="Data\Entity.cpp" />
+    <ClCompile Include="Data\Map.cpp" />
+    <ClCompile Include="Data\Node.cpp" />
+    <ClCompile Include="Data\TileSet.cpp" />
+    <ClCompile Include="Graphics\Animator.cpp" />
+    <ClCompile Include="Graphics\Color.cpp" />
+    <ClCompile Include="Graphics\Font.cpp" />
+    <ClCompile Include="Graphics\MapRenderer.cpp" />
+    <ClCompile Include="Graphics\Shape.cpp" />
+    <ClCompile Include="Graphics\ShapeRenderer.cpp" />
+    <ClCompile Include="Graphics\Sprite.cpp" />
+    <ClCompile Include="Graphics\SpriteRenderer.cpp" />
+    <ClCompile Include="Graphics\Text.cpp" />
+    <ClCompile Include="Graphics\TextRenderer.cpp" />
+    <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Input\InputManager.cpp" />
+    <ClCompile Include="json\jsoncpp.cpp" />
+    <ClCompile Include="Physics\Collider.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{11B9D570-67E3-438B-9A3C-98A7CA4B2CCC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CoolinEngine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)..\bin\</OutDir>
+    <TargetName>$(ProjectName)-d</TargetName>
+    <IntDir>$(ProjectDir)..\tmp\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\bin\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <IntDir>$(ProjectDir)..\tmp\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>CREAENGINE_EXPORTS;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\SFML-2.4.2\include;..\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm150 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\SFML-2.4.2\lib\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(ProjectDir)..\lib\$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(ProjectDir)..\lib\$(TargetName).lib</ImportLibrary>
+      <ProfileGuidedDatabase>$(ProjectDir)..\lib\$(TargetName).pgd</ProfileGuidedDatabase>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy  /y /d "$(OutDir)*.dll" "$(ProjectDir)..\..\Cells\bin\" </Command>
+      <Message>Copying CreaEngine.dll</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>CREAENGINE_EXPORTS;WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\SFML-2.4.2\include;..\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>D:\SFML-2.4.2\lib\Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)\$(TargetName)$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>$(ProjectDir)..\lib\$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(ProjectDir)..\lib\$(TargetName).lib</ImportLibrary>
+      <ProfileGuidedDatabase>$(ProjectDir)..\lib$(TargetName).pgd</ProfileGuidedDatabase>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy  /y /d "$(OutDir)*.dll" "$(ProjectDir)..\..\Cells\bin\" </Command>
+      <Message>Copying CreaEngine.dll</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

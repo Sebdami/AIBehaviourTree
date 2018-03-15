@@ -1,0 +1,10 @@
+{ 	"spritesheet":"Peon/Peong.png",
+	"frames":[
+			{
+			 "id":0,
+			 "x":0,
+			 "y":144,
+			 "w":-72,
+			 "h":72
+			}]
+}  

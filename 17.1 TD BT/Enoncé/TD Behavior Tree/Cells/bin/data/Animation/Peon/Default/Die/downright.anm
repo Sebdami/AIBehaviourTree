@@ -1,0 +1,14 @@
+{ 	"spritesheet":"Peon/Peon.png",
+	"loop":false,
+	"multiframes":[			
+			{
+			 "id":0,
+			 "x":0,
+			 "y":432,
+			 "w":72,
+			 "h":72,
+			 "frames":3,
+			 "offsetx":72,			 
+			 "offsety":0
+			}]
+} 

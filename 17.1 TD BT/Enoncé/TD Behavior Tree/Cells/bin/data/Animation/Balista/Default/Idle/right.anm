@@ -1,0 +1,10 @@
+{ 	"spritesheet":"Balista/Balista.png",
+	"frames":[
+			{
+			 "id":0,
+			 "x":132,
+			 "y":0,
+			 "w":66,
+			 "h":66
+			}]
+}  
