@@ -334,7 +334,7 @@ void SceneBehaviorTree::setBehaviour()
 		{
 			m_vEntities[i]->removeComponent(pBT);
 		}
-
+		
 		// Behavior Tree modes
 		switch (m_iBTMode)
 		{
@@ -347,7 +347,7 @@ void SceneBehaviorTree::setBehaviour()
 			Sequence* pSeq = new Sequence;
 			pSeq->addChild(pSeekTo);
 			pSeq->addChild(pFleeUntil);
-			BehaviorTree* pBT = new BehaviorTree();
+			pBT = new BehaviorTree();
 			pBT->setRootBehavior(pSeq);
 			m_vEntities[i]->addComponent(pBT);
 		}
@@ -358,13 +358,13 @@ void SceneBehaviorTree::setBehaviour()
 			ActionSeekTo* pSeekTo = new ActionSeekTo(pSeek, 10.0f);
 			Flee* pFlee = new Flee(m_vEntities[i], m_pMouse);
 			ActionFleeUntil* pFleeUntil = new ActionFleeUntil(pFlee, 300.0f);
-			Wander* pWander = new Wander(m_vEntities[i], 10.0f, 50.0f, 25.0f);
+			Wander* pWander = new Wander(m_vEntities[i], 200.0f, 100.0f, 10.0f);
 			ActionWander* pWanderAction = new ActionWander(pWander, 2.0f);
 			Sequence* pSeq = new Sequence;
 			pSeq->addChild(pSeekTo);
 			pSeq->addChild(pFleeUntil);
 			pSeq->addChild(pWanderAction);
-			BehaviorTree* pBT = new BehaviorTree();
+			pBT = new BehaviorTree();
 			pBT->setRootBehavior(pSeq);
 			m_vEntities[i]->addComponent(pBT);
 		}
