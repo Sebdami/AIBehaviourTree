@@ -338,7 +338,7 @@ void SceneBehaviorTree::setBehaviour()
 		// Behavior Tree modes
 		switch (m_iBTMode)
 		{
-		case 0: 
+		case 0:
 		{
 			Seek* pSeek = new Seek(m_vEntities[i], m_pMouse);
 			ActionSeekTo* pSeekTo = new ActionSeekTo(pSeek, 10.0f);
@@ -351,8 +351,8 @@ void SceneBehaviorTree::setBehaviour()
 			pBT->setRootBehavior(pSeq);
 			m_vEntities[i]->addComponent(pBT);
 		}
-			break;
-		case 1: 
+		break;
+		case 1:
 		{
 			Seek* pSeek = new Seek(m_vEntities[i], m_pMouse);
 			ActionSeekTo* pSeekTo = new ActionSeekTo(pSeek, 10.0f);
@@ -368,8 +368,28 @@ void SceneBehaviorTree::setBehaviour()
 			pBT->setRootBehavior(pSeq);
 			m_vEntities[i]->addComponent(pBT);
 		}
-			break;
-		case 2: 
+		break;
+		case 2:
+		{
+			Seek * pSeek = new Seek(m_vEntities[i], m_pMouse);
+			ActionSeekTo* pSeekTo = new ActionSeekTo(pSeek, 10.0f);
+			Flee* pFlee = new Flee(m_vEntities[i], m_pMouse);
+			ActionFleeUntil* pFleeUntil = new ActionFleeUntil(pFlee, 300.0f);
+			Wander* pWander = new Wander(m_vEntities[i], 200.0f, 100.0f, 10.0f);
+			ActionWander* pWanderAction = new ActionWander(pWander, 2.0f);
+			Sequence* pSeq = new Sequence;
+			
+			pSeq->addChild(pSeekTo);
+			pSeq->addChild(pFleeUntil);
+			pSeq->addChild(pWanderAction);
+
+			IsAwayFromTargetDecorator* pDecorator = new IsAwayFromTargetDecorator(pSeq, m_vEntities[i], m_pMouse, 400.0f);
+
+			pBT = new BehaviorTree();
+			pBT->setRootBehavior(pDecorator);
+
+			m_vEntities[i]->addComponent(pBT);
+		}
 			break;
 		case 3: 
 			break;

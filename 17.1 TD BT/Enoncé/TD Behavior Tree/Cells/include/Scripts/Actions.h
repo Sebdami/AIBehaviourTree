@@ -190,4 +190,46 @@ public:
 	}
 };
 
+class IsAwayFromTargetDecorator : public Decorator
+{
+	Entity* m_pSelfEntity;
+	Entity* m_pTarget;
+	float m_fMaxDistance;
+public:
+	IsAwayFromTargetDecorator() {}
+	IsAwayFromTargetDecorator(Behavior* pChild, Entity* pSelf, Entity* pTarget, float fMaxDistance)
+		: Decorator(pChild), m_pSelfEntity(pSelf), m_pTarget(pTarget), m_fMaxDistance(fMaxDistance) {}
+
+	virtual void onInitialize()
+	{
+		m_pChild->onInitialize();
+	}
+
+	virtual Status tick()
+	{
+		if ((m_pTarget->getPosition() - m_pSelfEntity->getPosition()).length() < m_fMaxDistance)
+			return m_pChild->tick();
+		else
+			return Status::BH_FAILURE;
+	}
+
+	virtual Status update()
+	{
+		if ((m_pTarget->getPosition() - m_pSelfEntity->getPosition()).length() < m_fMaxDistance)
+			return m_pChild->update();
+		else
+			return Status::BH_FAILURE;
+	}
+
+	virtual void onTerminate(Status s)
+	{
+		m_pChild->onTerminate(s);
+	}
+
+	virtual Behavior* clone()
+	{
+		return new IsAwayFromTargetDecorator(m_pChild, m_pSelfEntity, m_pTarget, m_fMaxDistance);
+	}
+};
+
 #endif
