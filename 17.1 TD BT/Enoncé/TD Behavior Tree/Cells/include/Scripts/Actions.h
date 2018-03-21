@@ -347,5 +347,38 @@ public:
 		return new TimerFilter(m_pChild, m_fMaxTime);
 	}
 };
+class IsMyName : public Decorator
+{
+	Entity* m_pSelfEntity;
+	string m_sName;
+
+public:
+	IsMyName() {}
+	IsMyName(Behavior* pChild, Entity* pSelf, string sName)
+		: Decorator(pChild), m_pSelfEntity(pSelf), m_sName(sName) {}
+
+	virtual void onInitialize()
+	{
+		m_pChild->onInitialize();
+	}
+
+	virtual Status update()
+	{
+		if (m_pSelfEntity->getName() == m_sName)
+			return m_pChild->update();
+		else
+			return Status::BH_FAILURE;
+	}
+
+	virtual void onTerminate(Status s)
+	{
+		m_pChild->onTerminate(s);
+	}
+
+	virtual Behavior* clone()
+	{
+		return new IsMyName(m_pChild, m_pSelfEntity, m_sName);
+	}
+};
 
 #endif

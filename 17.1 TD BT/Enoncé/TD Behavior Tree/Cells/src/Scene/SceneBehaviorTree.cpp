@@ -214,7 +214,7 @@ bool SceneBehaviorTree::onUpdate()
 		m_pTextBTMode->setString("Wander if EntityNameIs ...");
 		setBehaviour();
 	}
-	if (m_pGM->isKeyPressed(Key::Numpad6))
+	if (m_pGM->isKeyPressed(Key::Numpad7))
 	{
 		m_iBTMode = 7;
 		m_pTextBTMode->setString("Scenario individuel");
@@ -441,8 +441,8 @@ void SceneBehaviorTree::setBehaviour()
 			pBT->setRootBehavior(pSel);
 			m_vEntities[i]->addComponent(pBT);
 		}
-			break;
-		case 5: 
+		break;
+		case 5:
 		{
 			Seek* pSeek = new Seek(m_vEntities[i], m_pMouse);
 			ActionSeekTo* pSeekTo = new ActionSeekTo(pSeek, 10.0f);
@@ -466,8 +466,32 @@ void SceneBehaviorTree::setBehaviour()
 			pBT->setRootBehavior(pSel);
 			m_vEntities[i]->addComponent(pBT);
 		}
-			break;
+		break;
 		case 6:
+		{
+			Seek * pSeek = new Seek(m_vEntities[i], m_pMouse);
+			ActionSeekTo* pSeekTo = new ActionSeekTo(pSeek, 10.0f);
+			Flee* pFlee = new Flee(m_vEntities[i], m_pMouse);
+			ActionFleeUntil* pFleeUntil = new ActionFleeUntil(pFlee, 200.0f);
+			Wander* pWander = new Wander(m_vEntities[i], 200.0f, 100.0f, 10.0f);
+			ActionWander* pWanderAction = new ActionWander(pWander);
+
+			
+
+			Sequence* pSeq = new Sequence;
+			Selector* pSel = new Selector;
+			pSeq->addChild(pSeekTo);
+			pSeq->addChild(pFleeUntil);
+
+			IsMyName* pIsMyName = new IsMyName(pSeq, m_vEntities[i], "0");
+
+			pSel->addChild(pIsMyName);
+			pSel->addChild(pWanderAction);
+
+			pBT = new BehaviorTree();
+			pBT->setRootBehavior(pSel);
+			m_vEntities[i]->addComponent(pBT);
+		}
 			break;
 		case 7:
 			break;
