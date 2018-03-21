@@ -257,4 +257,95 @@ public:
 	}
 };
 
+class RepeatDecorator : public Decorator
+{
+	int m_iMaxIterations;
+	int m_iCurrentIterations;
+public:
+	RepeatDecorator() {}
+	RepeatDecorator(Behavior* pChild, int iMaxIterations)
+		: Decorator(pChild), m_iMaxIterations(iMaxIterations), m_iCurrentIterations(0){}
+
+	virtual void onInitialize()
+	{
+		m_pChild->onInitialize();
+		m_iCurrentIterations = 0;
+	}
+
+	virtual Status update()
+	{
+		if (m_iCurrentIterations >= m_iMaxIterations)
+			return BH_FAILURE;
+
+		Status s = m_pChild->update();
+		if (s == BH_SUCCESS)
+		{
+			m_iCurrentIterations++;
+			m_pChild->onTerminate(BH_SUCCESS);
+			if (m_iCurrentIterations >= m_iMaxIterations)
+				return BH_FAILURE;
+			m_pChild->onInitialize();
+			return BH_RUNNING;
+		}
+		return s;
+	}
+
+	virtual void onTerminate(Status s)
+	{
+		m_pChild->onTerminate(s);
+		m_iCurrentIterations = 0;
+	}
+
+	virtual Behavior* clone()
+	{
+		return new RepeatDecorator(m_pChild, m_iMaxIterations);
+	}
+};
+
+class TimerFilter : public Decorator
+{
+	float m_fMaxTime;
+	float m_fCurrentTime;
+public:
+	TimerFilter() {}
+	TimerFilter(Behavior* pChild, float fMaxTime)
+		: Decorator(pChild), m_fMaxTime(fMaxTime), m_fCurrentTime(0.0f) {}
+
+	virtual void onInitialize()
+	{
+		m_pChild->onInitialize();
+		m_fCurrentTime = 0.0f;
+	}
+
+	virtual Status update()
+	{
+		if (m_fCurrentTime >= m_fMaxTime)
+		{
+			return BH_FAILURE;
+		}
+		m_fCurrentTime += TimeManager::getSingleton()->getFrameTime().asSeconds();
+		if (m_fCurrentTime >= m_fMaxTime)
+		{
+			//m_pChild->onTerminate(BH_SUCCESS);
+			return BH_FAILURE;
+		}
+		else
+		{
+			return m_pChild->update();
+		}
+		
+	}
+
+	virtual void onTerminate(Status s)
+	{
+		m_pChild->onTerminate(s);
+		m_fCurrentTime = 0.0f;
+	}
+
+	virtual Behavior* clone()
+	{
+		return new TimerFilter(m_pChild, m_fMaxTime);
+	}
+};
+
 #endif
