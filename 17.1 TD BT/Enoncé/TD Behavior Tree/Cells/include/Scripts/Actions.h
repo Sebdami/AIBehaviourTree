@@ -135,11 +135,9 @@ class ActionWander : public Behavior
 {
 	Steering* m_pSteering;
 	Wander* m_pWander;
-	float m_fWanderTime;
 	float timer;
 public:
-	ActionWander(Wander* _pWander, float _wanderTime )
-		: m_fWanderTime(_wanderTime)
+	ActionWander(Wander* _pWander)
 	{
 		m_pWander = _pWander;
 		m_pSteering = m_pWander->getEntity()->getComponent<Steering>();
@@ -155,7 +153,6 @@ public:
 		{
 			m_pSteering->addBehaviour(m_pWander, 1.0f);
 		}
-		timer = 0.0f;
 	}
 
 	virtual void onTerminate(Status s)
@@ -172,16 +169,8 @@ public:
 		{
 			return BH_FAILURE;
 		}
-		timer += TimeManager::getSingleton()->getFrameTime().asSeconds();
-		if (timer >= m_fWanderTime)
-		{
-			timer = 0.0f;
-			return BH_SUCCESS;
-		}
-		else
-		{
-			return BH_RUNNING;
-		}
+
+		return BH_RUNNING;
 	}
 
 	virtual Behavior* clone()
@@ -190,11 +179,51 @@ public:
 	}
 };
 
+class IsNearTargetDecorator : public Decorator
+{
+	Entity* m_pSelfEntity;
+	Entity* m_pTarget;
+	float m_fMaxDistance;
+
+public:
+	IsNearTargetDecorator() {}
+	IsNearTargetDecorator(Behavior* pChild, Entity* pSelf, Entity* pTarget, float fMaxDistance)
+		: Decorator(pChild), m_pSelfEntity(pSelf), m_pTarget(pTarget), m_fMaxDistance(fMaxDistance){}
+
+	virtual void onInitialize()
+	{
+		m_pChild->onInitialize();
+	}
+
+	virtual Status update()
+	{
+		if ((m_pTarget->getPosition() - m_pSelfEntity->getPosition()).length() < m_fMaxDistance)
+		{
+			return m_pChild->update();
+		}
+		else
+		{
+			return Status::BH_FAILURE;
+		}
+	}
+
+	virtual void onTerminate(Status s)
+	{
+		m_pChild->onTerminate(s);
+	}
+
+	virtual Behavior* clone()
+	{
+		return new IsNearTargetDecorator(m_pChild, m_pSelfEntity, m_pTarget, m_fMaxDistance);
+	}
+};
+
 class IsAwayFromTargetDecorator : public Decorator
 {
 	Entity* m_pSelfEntity;
 	Entity* m_pTarget;
 	float m_fMaxDistance;
+
 public:
 	IsAwayFromTargetDecorator() {}
 	IsAwayFromTargetDecorator(Behavior* pChild, Entity* pSelf, Entity* pTarget, float fMaxDistance)
@@ -205,20 +234,16 @@ public:
 		m_pChild->onInitialize();
 	}
 
-	virtual Status tick()
-	{
-		if ((m_pTarget->getPosition() - m_pSelfEntity->getPosition()).length() < m_fMaxDistance)
-			return m_pChild->tick();
-		else
-			return Status::BH_FAILURE;
-	}
-
 	virtual Status update()
 	{
-		if ((m_pTarget->getPosition() - m_pSelfEntity->getPosition()).length() < m_fMaxDistance)
+		if ((m_pTarget->getPosition() - m_pSelfEntity->getPosition()).length() >= m_fMaxDistance)
+		{
 			return m_pChild->update();
+		}
 		else
+		{
 			return Status::BH_FAILURE;
+		}
 	}
 
 	virtual void onTerminate(Status s)

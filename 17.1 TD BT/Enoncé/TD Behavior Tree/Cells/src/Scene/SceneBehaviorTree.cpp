@@ -359,7 +359,7 @@ void SceneBehaviorTree::setBehaviour()
 			Flee* pFlee = new Flee(m_vEntities[i], m_pMouse);
 			ActionFleeUntil* pFleeUntil = new ActionFleeUntil(pFlee, 300.0f);
 			Wander* pWander = new Wander(m_vEntities[i], 200.0f, 100.0f, 10.0f);
-			ActionWander* pWanderAction = new ActionWander(pWander, 2.0f);
+			ActionWander* pWanderAction = new ActionWander(pWander);
 			Sequence* pSeq = new Sequence;
 			pSeq->addChild(pSeekTo);
 			pSeq->addChild(pFleeUntil);
@@ -376,22 +376,48 @@ void SceneBehaviorTree::setBehaviour()
 			Flee* pFlee = new Flee(m_vEntities[i], m_pMouse);
 			ActionFleeUntil* pFleeUntil = new ActionFleeUntil(pFlee, 300.0f);
 			Wander* pWander = new Wander(m_vEntities[i], 200.0f, 100.0f, 10.0f);
-			ActionWander* pWanderAction = new ActionWander(pWander, 2.0f);
+			ActionWander* pWanderAction = new ActionWander(pWander);
 			Sequence* pSeq = new Sequence;
 			
-			pSeq->addChild(pSeekTo);
-			pSeq->addChild(pFleeUntil);
-			pSeq->addChild(pWanderAction);
+			IsNearTargetDecorator* pDecoratorSeek = new IsNearTargetDecorator(pSeekTo, m_vEntities[i], m_pMouse, 400.0f);
+			IsNearTargetDecorator* pDecoratorFlee = new IsNearTargetDecorator(pFleeUntil, m_vEntities[i], m_pMouse, 400.0f);
+			IsNearTargetDecorator* pDecoratorWander = new IsNearTargetDecorator(pWanderAction, m_vEntities[i], m_pMouse, 400.0f);
 
-			IsAwayFromTargetDecorator* pDecorator = new IsAwayFromTargetDecorator(pSeq, m_vEntities[i], m_pMouse, 400.0f);
+			pSeq->addChild(pDecoratorSeek);
+			pSeq->addChild(pDecoratorFlee);
+			pSeq->addChild(pDecoratorWander);
 
 			pBT = new BehaviorTree();
-			pBT->setRootBehavior(pDecorator);
+			pBT->setRootBehavior(pSeq);
 
 			m_vEntities[i]->addComponent(pBT);
 		}
 			break;
 		case 3: 
+		{
+			Seek* pSeek = new Seek(m_vEntities[i], m_pMouse);
+			ActionSeekTo* pSeekTo = new ActionSeekTo(pSeek, 10.0f);
+			Flee* pFlee = new Flee(m_vEntities[i], m_pMouse);
+			ActionFleeUntil* pFleeUntil = new ActionFleeUntil(pFlee, 200.0f);
+			Wander* pWander = new Wander(m_vEntities[i], 200.0f, 100.0f, 10.0f);
+			ActionWander* pWanderAction = new ActionWander(pWander);
+
+
+			IsNearTargetDecorator* pDecoratorSeek = new IsNearTargetDecorator(pSeekTo, m_vEntities[i], m_pMouse, 300.0f);
+			IsNearTargetDecorator* pDecoratorFlee = new IsNearTargetDecorator(pFleeUntil, m_vEntities[i], m_pMouse, 300.0f);
+
+			IsAwayFromTargetDecorator* pDecoratorWander = new IsAwayFromTargetDecorator(pWanderAction, m_vEntities[i], m_pMouse, 300.0f);
+
+			Sequence* pSeq = new Sequence;
+			Selector* pSel = new Selector;
+			pSeq->addChild(pDecoratorSeek);
+			pSeq->addChild(pDecoratorFlee);
+			pSel->addChild(pSeq);
+			pSel->addChild(pDecoratorWander);
+			pBT = new BehaviorTree();
+			pBT->setRootBehavior(pSel);
+			m_vEntities[i]->addComponent(pBT); 
+		}
 			break;
 		case 4: 
 			break;

@@ -154,7 +154,7 @@ protected:
 		for (;;)
 		{
 			Status s = (*m_CurrentChild)->tick();
-
+			
 			// If the child fails, or keeps running, do the same.
 			if (s != BH_SUCCESS)
 			{
@@ -224,6 +224,17 @@ protected:
 					return BH_FAILURE;
 				}
 			}
+		}
+
+		virtual Behavior* clone()
+		{
+			Selector* p = new Selector(*this);
+			for (int i = 0; i < (int)m_Children.size(); i++)
+			{
+				Behavior* pChild = m_Children[i];
+				p->addChild(pChild->clone());
+			}
+			return p;
 		}
 
 		Behaviors::iterator m_Current;
