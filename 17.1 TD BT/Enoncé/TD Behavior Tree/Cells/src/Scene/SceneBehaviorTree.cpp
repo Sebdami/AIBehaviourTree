@@ -494,6 +494,45 @@ void SceneBehaviorTree::setBehaviour()
 		}
 			break;
 		case 7:
+		{
+			Seek* pSeek = new Seek(m_vEntities[i], m_pMouse);
+			Seek * pSeekHQ = new Seek(m_vEntities[i], m_pGM->getEntity("hq1"));
+			Seek * pSeekMine = new Seek(m_vEntities[i], m_pGM->getEntity("mine1"));
+			ActionSeekTo* pSeekToHQ = new ActionSeekTo(pSeekHQ, 10.0f);
+			ActionSeekTo* pSeekToMine = new ActionSeekTo(pSeekMine, 10.0f);
+			ActionSeekTo* pSeekTo = new ActionSeekTo(pSeek, 10.0f);
+
+			Wander* pWander = new Wander(m_vEntities[i], 200.0f, 100.0f, 10.0f);
+			ActionWander* pWanderAction = new ActionWander(pWander);
+
+			IsNearTargetDecorator* pNearMouse = new IsNearTargetDecorator(pSeekTo, m_vEntities[i], m_pMouse, 100.0f);
+
+			vector<Entity*> vMineAndHQ;
+			vMineAndHQ.push_back(m_pGM->getEntity("hq1"));
+			vMineAndHQ.push_back(m_pGM->getEntity("mine1"));
+
+			IsNearTargetsDecorator* pNearHQOrMine1 = new IsNearTargetsDecorator(pSeekToMine, m_vEntities[i], vMineAndHQ, 300.0f);
+			IsNearTargetsDecorator* pNearHQOrMine2 = new IsNearTargetsDecorator(pSeekToHQ, m_vEntities[i], vMineAndHQ, 300.0f);
+
+			Sequence* pSeq = new Sequence;
+			Selector* pSel = new Selector;
+			pSeq->addChild(pNearHQOrMine1);
+			pSeq->addChild(pNearHQOrMine2);
+
+			IsTargetFarDecorator* pFarFromMouse = new IsTargetFarDecorator(pSeq, m_vEntities[i], m_pMouse, 100.0f);
+
+			
+
+			IsTargetFarDecorator* pFarFromMouseWander = new IsTargetFarDecorator(pWanderAction, m_vEntities[i], m_pMouse, 100.0f);
+			IsFarFromTargetsDecorator* pFarFromHQAndMine = new IsFarFromTargetsDecorator(pFarFromMouseWander, m_vEntities[i], vMineAndHQ, 300.0f);
+			pSel->addChild(pNearMouse);
+			pSel->addChild(pFarFromMouse);
+			pSel->addChild(pFarFromHQAndMine);
+
+			pBT = new BehaviorTree();
+			pBT->setRootBehavior(pSel);
+			m_vEntities[i]->addComponent(pBT);
+		}
 			break;
 		}
 	}

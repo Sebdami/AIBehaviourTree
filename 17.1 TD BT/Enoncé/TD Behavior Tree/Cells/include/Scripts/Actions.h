@@ -381,4 +381,137 @@ public:
 	}
 };
 
+class IsNearTargetsDecorator : public Decorator
+{
+	Entity* m_pSelfEntity;
+	vector<Entity*> m_pTargets;
+	float m_fMaxDistance;
+
+public:
+	IsNearTargetsDecorator() {}
+	IsNearTargetsDecorator(Behavior* pChild, Entity* pSelf, vector<Entity*> pTargets, float fMaxDistance)
+		: Decorator(pChild), m_pSelfEntity(pSelf), m_pTargets(pTargets), m_fMaxDistance(fMaxDistance) {}
+
+	virtual void onInitialize()
+	{
+		m_pChild->onInitialize();
+	}
+
+	virtual Status update()
+	{
+		bool isNear = false;
+		for(auto it = m_pTargets.begin(); it != m_pTargets.end(); it++)
+			if (((*it)->getPosition() - m_pSelfEntity->getPosition()).length() < m_fMaxDistance)
+			{
+				isNear = true;
+				break;
+			}
+
+		if (isNear)
+		{
+			return m_pChild->update();
+		}
+		else
+		{
+			return Status::BH_FAILURE;
+		}
+	}
+
+	virtual void onTerminate(Status s)
+	{
+		m_pChild->onTerminate(s);
+	}
+
+	virtual Behavior* clone()
+	{
+		return new IsNearTargetsDecorator(m_pChild, m_pSelfEntity, m_pTargets, m_fMaxDistance);
+	}
+};
+
+class IsTargetFarDecorator : public Decorator
+{
+	Entity* m_pSelfEntity;
+	Entity* m_pTarget;
+	float m_fMinDistance;
+
+public:
+	IsTargetFarDecorator() {}
+	IsTargetFarDecorator(Behavior* pChild, Entity* pSelf, Entity* pTarget, float fMinDistance)
+		: Decorator(pChild), m_pSelfEntity(pSelf), m_pTarget(pTarget), m_fMinDistance(fMinDistance) {}
+
+	virtual void onInitialize()
+	{
+		m_pChild->onInitialize();
+	}
+
+	virtual Status update()
+	{
+		if ((m_pTarget->getPosition() - m_pSelfEntity->getPosition()).length() > m_fMinDistance)
+		{
+			return m_pChild->update();
+		}
+		else
+		{
+			return Status::BH_FAILURE;
+		}
+	}
+
+	virtual void onTerminate(Status s)
+	{
+		m_pChild->onTerminate(s);
+	}
+
+	virtual Behavior* clone()
+	{
+		return new IsTargetFarDecorator(m_pChild, m_pSelfEntity, m_pTarget, m_fMinDistance);
+	}
+};
+
+class IsFarFromTargetsDecorator : public Decorator
+{
+	Entity* m_pSelfEntity;
+	vector<Entity*> m_pTargets;
+	float m_fMinDistance;
+
+public:
+	IsFarFromTargetsDecorator() {}
+	IsFarFromTargetsDecorator(Behavior* pChild, Entity* pSelf, vector<Entity*> pTargets, float fMinDistance)
+		: Decorator(pChild), m_pSelfEntity(pSelf), m_pTargets(pTargets), m_fMinDistance(fMinDistance) {}
+
+	virtual void onInitialize()
+	{
+		m_pChild->onInitialize();
+	}
+
+	virtual Status update()
+	{
+		bool isFar = false;
+		for (auto it = m_pTargets.begin(); it != m_pTargets.end(); it++)
+			if (((*it)->getPosition() - m_pSelfEntity->getPosition()).length() > m_fMinDistance)
+			{
+				isFar = true;
+				break;
+			}
+
+		if (isFar)
+		{
+			return m_pChild->update();
+		}
+		else
+		{
+			return Status::BH_FAILURE;
+		}
+	}
+
+	virtual void onTerminate(Status s)
+	{
+		m_pChild->onTerminate(s);
+	}
+
+	virtual Behavior* clone()
+	{
+		return new IsFarFromTargetsDecorator(m_pChild, m_pSelfEntity, m_pTargets, m_fMinDistance);
+	}
+};
+
 #endif
