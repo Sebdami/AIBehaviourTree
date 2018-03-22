@@ -409,6 +409,8 @@ public:
 
 		if (isNear)
 		{
+			m_pChild->onTerminate(BH_SUCCESS);
+			m_pChild->onInitialize();
 			return m_pChild->update();
 		}
 		else
@@ -485,11 +487,11 @@ public:
 
 	virtual Status update()
 	{
-		bool isFar = false;
+		bool isFar = true;
 		for (auto it = m_pTargets.begin(); it != m_pTargets.end(); it++)
-			if (((*it)->getPosition() - m_pSelfEntity->getPosition()).length() > m_fMinDistance)
+			if (((*it)->getPosition() - m_pSelfEntity->getPosition()).length() < m_fMinDistance)
 			{
-				isFar = true;
+				isFar = false;
 				break;
 			}
 
